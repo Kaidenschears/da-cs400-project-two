@@ -1,15 +1,15 @@
 FrontEndDeveloper README for Project Two (CS400 @ UW Madison)
 ========================================================
 
-Name of FrontEndDeveloper: 
+Name of FrontEndDeveloper: Ji Lau
 
 Group: DA
 Team: RED
 
 Files Written by Me:
 --------------------
-
-
+Frontend.java
+FrontEndDeveloperTests.java
 
 Additional Contributions:
 -------------------------
@@ -18,7 +18,7 @@ Additional Contributions:
  like: organizing team communication, creating extra tests or dummy classes,
  assisting team members in any way, etc.>
 
-Signature:
+Signature: Ji Lau
 ----------
 <Type out your full name here to certify that all of the files written by you
  that are listed above are the product of your individual development efforts
