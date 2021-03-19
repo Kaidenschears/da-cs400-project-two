@@ -51,7 +51,7 @@ public class DataReaderImplementation implements EventDataReaderInterface {
   public static EventObject createEvent(List<String> columns) throws DataFormatException {
 
     String name, venue, groupName, description;
-    String eventDate;
+    Date eventDate;
     LocalDate currentDate = java.time.LocalDate.now();
 
     try {
@@ -67,7 +67,7 @@ public class DataReaderImplementation implements EventDataReaderInterface {
 
       description = columns.get(4);
 
-      eventDate = columns.get(1);
+      eventDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(columns.get(1)); 
 
 
     } catch (Exception e) {

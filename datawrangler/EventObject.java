@@ -9,20 +9,15 @@ public class EventObject implements Event {
   private String venue;
   private String name;
 
-  public EventObject(String name, String date, String venue, String groupName, String description) {
+  public EventObject(String name, Date date, String venue, String groupName, String description) {
     // TODO Auto-generated constructor stub
     this.name = name;
     this.venue = venue;
     this.groupName = groupName;
     this.description = description;
+    this.date = date;
     
-    try {
-      this.date = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(date);
-    } catch (Exception e) {
-      System.out.println("Date not formatted properly");
-      e.printStackTrace();
     }
-  }
 
   @Override
   public void setDate(Date newDate) {
@@ -63,12 +58,6 @@ public class EventObject implements Event {
 
   
   public int compareTo(EventObject obj) {
-    if(this.getDate().before(obj.getDate())) {
-      return 1;
-    }
-    else if(this.getDate().after(obj.getDate())) {
-      return -1;
-    } 
-    else return 0;
+    return this.getDate().compareTo(obj.getDate());
   }
 }
