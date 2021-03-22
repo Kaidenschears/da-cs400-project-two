@@ -1,6 +1,6 @@
  ## How to clone this repository? ##
 * Make sure Git is installed on your local machine if you plan to develop on it. Git is installed by default on most Linux/Mac distros. To check, type `git` in your command prompt (or terminal) and you should see a list of commands pop up if you have git. If you do not, see: https://git-scm.com/downloads.
-* In the terminal, type `git clone https://YOURUSERNAME@github.com/jlau24/da-cs400-red-project-two.git`.
+* In the terminal, type `git clone https://YOURUSERNAME@github.com/Kaidenschears/da-cs400-red-project-two.git`.
   * This will prompt you for your GitHub password. Enter it and cloning will start.
   * You may get a username/password deprecation notice in your emails. Password authentication will work until August 2021, so this is not an issue for us. For sake of simplicity, we will stick with password authentication.
 * Enter the repository with `cd da-cs400-red-project-two`, or whatever directory you cloned the repository into. 
