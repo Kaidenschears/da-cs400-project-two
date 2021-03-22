@@ -41,12 +41,10 @@ public class DataReaderImplementation implements EventDataReaderInterface {
   }
 
   /**
-   * Uses the columns list created through the parseEvent method and create a new movie
+   * Uses the columns list created through the parseEvent method and create a new Event
    * object @return(s) an instance of Event
    * 
-   * @throws DataFormatException if a movie doesn't have the right number of attributes, if passed a
-   *                             movie that was made outside of the range 1800-currentYear, or if
-   *                             avgVote is outside of the range 0.0-10.0.
+   * @throws DataFormatException 
    */
   public static Event createEvent(List<String> columns) throws DataFormatException {
 
