@@ -13,16 +13,16 @@ public class DataReaderImplementation implements EventDataReaderInterface {
   @Override
 
   /**
-   * Reads a FileReader into a list of movie objects @return(s) List of Movie objects
+   * Reads a FileReader into a list of movie objects @return(s) List of Event objects
    * 
    * @throws IOException,DataFormatException
    */
-  public List<Event> readDataSet(Reader inputReader) throws IOException, DataFormatException {
+  public List<EventInterface> readDataSet(Reader inputReader) throws IOException, DataFormatException {
     if (inputReader == null) {
       throw new IOException("Reader object passed to ReadDataSet is null");
     }
 
-    List<Event> events = new ArrayList<Event>();
+    List<EventInterface> events = new ArrayList<Event>();
     String line = "";
     BufferedReader br = null;
     br = new BufferedReader(inputReader);
@@ -30,7 +30,7 @@ public class DataReaderImplementation implements EventDataReaderInterface {
     line = br.readLine();
     while (line != null) {
       char[] charStream = line.toCharArray();
-      EventObject newEvent = createEvent(parseEvent(charStream));
+      Event newEvent = createEvent(parseEvent(charStream));
       events.add(newEvent);
       line = br.readLine();
 
@@ -42,13 +42,13 @@ public class DataReaderImplementation implements EventDataReaderInterface {
 
   /**
    * Uses the columns list created through the parseEvent method and create a new movie
-   * object @return(s) an instance of EventObject
+   * object @return(s) an instance of Event
    * 
    * @throws DataFormatException if a movie doesn't have the right number of attributes, if passed a
    *                             movie that was made outside of the range 1800-currentYear, or if
    *                             avgVote is outside of the range 0.0-10.0.
    */
-  public static EventObject createEvent(List<String> columns) throws DataFormatException {
+  public static Event createEvent(List<String> columns) throws DataFormatException {
 
     String name, venue, groupName, description;
     Date eventDate;
@@ -73,7 +73,7 @@ public class DataReaderImplementation implements EventDataReaderInterface {
     } catch (Exception e) {
       throw new DataFormatException(e.getMessage());
     }
-    return new EventObject(name, eventDate, venue, groupName, description);// put arguments here);
+    return new Event(name, eventDate, venue, groupName, description);// put arguments here);
     // name, Date, venue, groupName, description
   }
 
