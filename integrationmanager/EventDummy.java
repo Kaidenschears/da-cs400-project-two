@@ -1,38 +1,45 @@
 import java.util.Date;
-public class EventDummy {
+
+public class EventDummy implements EventInterface {
     private Date date;
-    private String name;
+    public String name;
     private String description;
     private String groupName;
     private String venueSetting;
+
+    public EventDummy(Date date, String name, String description, String groupName, String venueSetting) {
+        this.date = date;
+        this.name = name;
+        this.description = description;
+        this.groupName = groupName;
+        this.venueSetting = venueSetting;
+    }
     
-    public Event(Date dateObj, String name, String groupName, String venueSetting, String description){
-        this.date=dateObj;
-        this.name=name;
-        this.groupName=groupName;
-        this.venueSetting=venueSetting;
-        this.description=description;
+    public void setDate(Date obj) {
+        date = obj;
     }
-    public Date setDate(Date obj){
-        this.Date=obj;
-    }
-    public Date getDate(){
+
+    public Date getDate() {
         return date;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
-    public String getGroupName(){
+
+    public String getGroupName() {
         return groupName;
     }
-    public String getVenue(){
+
+    public String getVenueSetting() {
         return venueSetting;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public String toString(){
-        return "Event Name: "+this.name+ "\nEvent Date: "+this.date + "\nEvent Description: "+ this.description +"\nEvent Venue: "
-        +this.venueSetting+ "\nGroup Name: " + this.groupName;
+
+    public String toString() {
+        return name;
     }
 }
