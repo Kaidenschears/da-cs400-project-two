@@ -15,7 +15,7 @@ Global Chemistry Conference,30-Mar-2021 112:00:00,The Arena,Foundation for Globa
 Accounting Conference 2021,30-Mar-2021 08:00:00,The Arena,World Accounting Group,Annual Conference for Accountants
 Civil Engineering Summit,30-Mar-2021 10:00:00,The Arena,ASC,Annual Conference for Civil Engineers
 Dan Ponto Invitational, 01-Apr-2021 08:00:00,The Arena,AAU,Basketball Tournament
-Country Music Show,01-Apr,2021 18:00:00,The Arena,Eric Church,Eric Church Performs live
-Chemistry For Kids,02-Apr,2021 10:00:00,The Arena,Science Teachers,Introduce children to chemistry in a fun way
-Alex Jansen Invitation,03-Apr,2021 08:00:00,The Arena,USAV,Volleyball Tournament
-Our Universe,02-Apr,2021 18:00:00,Neil Degrasse-Tyson,A lectrue on what makes our universe so awesome
+Country Music Show,01-Apr-2021 18:00:00,The Arena,Eric Church,Eric Church Performs live
+Chemistry For Kids,02-Apr-2021 10:00:00,The Arena,Science Teachers,Introduce children to chemistry in a fun way
+Alex Jansen Invitation,03-Apr-2021 08:00:00,The Arena,USAV,Volleyball Tournament
+Our Universe,02-Apr-2021 18:00:00,Planetarium,Neil Degrasse-Tyson,A lectrue on what makes our universe so awesome
