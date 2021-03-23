@@ -22,12 +22,15 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
+/** The JUnit test suite for the frontend implementation
+ * @author Ji Lau
+ */
 public class FrontEndDeveloperTests {
     private BackendInterface backend;
 
     @BeforeEach
     public void setUp() {
-        backend = new BackendDummy();
+        backend = new BackendImplementation();
     }
     
     /**

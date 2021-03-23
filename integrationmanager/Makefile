@@ -63,7 +63,6 @@ BackendImplementation.class: BackendImplementation.java
 BackEndDeveloperTests.class: BackEndDeveloperTests.java
 	javac -cp .:junit5.jar BackEndDeveloperTests.java
 
-
 EventDummy.class: EventDummy.java
 	javac EventDummy.java
 
