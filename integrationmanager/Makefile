@@ -51,7 +51,7 @@ BackEndDeveloperTests.class: BackEndDeveloperTests.java
 
 testFrontend: EventInterface.class EventDummy.class BackendInterface.class BackendDummy.class Frontend.class FrontEndDeveloperTests.class
 	@echo --- RUNNING FRONTEND TESTS ---
-	java FrontEndDeveloperTest.class
+	java -jar junit5.jar -cp . --scan-classpath -n FrontEndDeveloperTests
 
 		
 EventDummy.class: EventDummy.java
@@ -67,7 +67,7 @@ Frontend.class: Frontend.java
 	javac Frontend.java 
 	
 FrontEndDeveloperTests.class: FrontEndDeveloperTests.java
-	javac FrontEndDeveloperTests.java
+	javac -cp .:junit5.jar FrontEndDeveloperTests.java
 	
 testData: EventInterface.class Event.class EventDataReaderInterface.class DataReaderImplementation.class DataWranglerTests.class
 	@echo --- RUNNING DATA WRANGLER TESTS ---
