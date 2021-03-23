@@ -22,6 +22,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
+/** The test suite for the frontend implementation
+ * @author Ji Lau
+ */
 public class FrontEndDeveloperTests {
     private BackendInterface backend;
 
