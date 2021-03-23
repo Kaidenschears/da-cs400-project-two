@@ -1,21 +1,24 @@
-/*
- * Test addEvent on an empty tree
-Test addEvent on a tree with some other items in it
-Test getEventsByName on a tree with the correct item(s)
-Test getEventsByDate on a tree with the correct item(s)
-Test if addEvent and getEventsByName could catch exceptions with invalid inputs
-Test instantiating back end with 3 events and test that those events are present in the getThreeEvents method
-Test getThreeAvailibleTimes outputting next three time slots
-Test isAvailable with and without conflicting events
+// --== CS400 File Header Information ==--
+// Name: Bennett Schmanski
+// Email: bschmanski@wisc.edu
+// Team: DA: Red
+// Role: Back End Developer
+// TA: Dan Kiel
+// Lecturer: Gary Dahl
+// Notes to Grader: 
 
- */
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.io.StringReader;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Test class for the BackendImplementation class. Includes 10 test classes testing the full functionality
+ * of the class.
+ */
 public class BackEndDeveloperTests {
 
     /**This method tests whether or not a backend instantiated with some events has them present when the
