@@ -1,18 +1,13 @@
-DataWrangler README for Project Two (CS400 @ UW Madison)
+BackEndDeveloper README for Project Two (CS400 @ UW Madison)
 ========================================================
 
-Name of DataWrangler: Sam Radtke
+Name of BackEndDeveloper: 
 
 Group: DA
 Team: RED
 
 Files Written by Me:
 --------------------
-Event.java
-EventObject.java
-EventDataReaderInterface.java
-DataWranglerImplementation.java
-
 
 
 
@@ -31,4 +26,3 @@ Signature:
  example: work reused from a previous semester, code examples taken from any
  website or book, or anything that was not explicitly authored by you for
  the purpose of completing this assigned CS400 project.>
- Samuel Radtke
