@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -275,7 +277,15 @@ class Frontend {
      * @param args the arguments, if any
      */
     public static void main(String[] args) {
-        Frontend frontend = new Frontend(new BackendImplementation());
-        frontend.run();
+        try {
+            if (args.length == 0) {
+                throw new IllegalArgumentException("One parameter: filename must be specified.");
+            }
+            Frontend frontend = new Frontend(new BackendImplementation(new FileReader(args[0])));
+            frontend.run();
+        }
+        catch (FileNotFoundException ex) {
+            System.out.println("Could not find the specified file.");
+        }
     }
 }
