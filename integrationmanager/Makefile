@@ -1,12 +1,51 @@
 default: run
 
-run: 
+run: compile
+	java Frontend 
 
 compile: Event.class  EventObject.class EventDataReaderInterface.class DataReaderImplementation.class 
 
 test: testData testBackend testFrontend
 
-testBackend: 
+
+testData: EventInterface.class Event.class EventDataReaderInterface.class DataReaderImplementation.class DataWranglerTests.class
+	@echo --- RUNNING DATA WRANGLER TESTS ---
+	java DataWranglerTest
+
+EventInterface.class: EventInterface.java
+	javac EventInterface.java 
+
+Event.class:Event.java
+	javac Event.java
+
+
+EventDataReaderInterface.class: EventDataReaderInterface.java
+	javac EventDataReaderInterface.java
+
+DataReaderImplementation.class: DataReaderImplementation.java
+	javac DataReaderImplementation.java
+
+
+testBackend: EventInterface.class EventReaderInterface.class BackendInterface.class Event.class RedBlackTree.class BackendImplementation.class BackEndDeveloperTests.class
+	@echo --- RUNNING BACKEND TESTS ---
+	java BackEndDeveloperTest.java
+	
+SortedCollectionInterface.class: SortedCollectionInterface.java 
+	javac SortedCollectionInterface.java
+
+BackendInterface.class: BackendInterface.java
+	javac BackendInterface.java
+
+RedBlackTree.class: RedBlackTree.java
+	javac RedBlackTree.java
+
+BackendImplementation.class: BackendImplementation.java
+	javac BackendImplementation.java
+
+BackEndDeveloperTests.class: BackEndDeveloperTests.java
+	javac BackEndDeveloperTests.java
+
+
 
 
 
@@ -14,8 +53,6 @@ testFrontend: EventInterface.class EventDummy.class BackendInterface.class Backe
 	@echo --- RUNNING FRONTEND TESTS ---
 	java FrontEndDeveloperTest.class
 
-EventInterface.class: EventInterface.java
-	javac EventInterface.java 
 		
 EventDummy.class: EventDummy.java
 	javac EventDummy.java
@@ -32,16 +69,16 @@ Frontend.class: Frontend.java
 FrontEndDeveloperTests.class: FrontEndDeveloperTests.java
 	javac FrontEndDeveloperTests.java
 	
-testData: Event.class  EventObject.class EventDataReaderInterface.class DataReaderImplementation.class DataWranglerTests.class
+testData: EventInterface.class Event.class EventDataReaderInterface.class DataReaderImplementation.class DataWranglerTests.class
 	@echo --- RUNNING DATA WRANGLER TESTS ---
 	java DataWranglerTest
 
+EventInterface.class: EventInterface.java
+	javac EventInterface.java 
 
 Event.class:Event.java
 	javac Event.java
 
-EventObject.class:EventObject.java
-	javac EventObject.java
 
 EventDataReaderInterface.class: EventDataReaderInterface.java
 	javac EventDataReaderInterface.java
