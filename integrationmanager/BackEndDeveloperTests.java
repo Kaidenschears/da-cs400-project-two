@@ -177,12 +177,7 @@ public class BackEndDeveloperTests {
      */
     @Test
     public void getEventInvalidTest() {
-        BackendImplementation backendToTest = new BackendImplementation(); /*new BackendImplementation(StringReader("
-        name, date, description, group-name, venue-setting/n" + 
-        "/"Milwaukee Bucks/", new Date(1617296400000L), /"Milwaukee Bucks vs. Boston Celtics/", /"Milwaukee Bucks/", /"Fiserv Forum/""+
-        "/"Milwaukee Bucks/", new Date(1617490800000L), /"Milwaukee Bucks vs. Toronto Raptors/", /"Milwaukee Bucks/", /"Fiserv Forum/""+
-        "/"Joe Rogan/", new Date(1617325200000L), /"Joe Rogan's latest comedy tour/", /"Joe Rogan/", /"Fiserv Forum/""+
-        "/"The Weeknd/", new Date(1617404400000L), /"The Weeknd's After Hours Tour/", /"The Weeknd/", /"Fiserv Forum/"")) */
+        BackendImplementation backendToTest = new BackendImplementation();
         boolean thrown = false;
         try {
             backendToTest.getEventsByDate(null);   
@@ -200,16 +195,16 @@ public class BackEndDeveloperTests {
     public void nextAvailableTimesTest() {
         BackendImplementation backendToTest = new BackendImplementation(new StringReader(
             "name, date, venue-setting, group-name, description\n" + 
-        "Milwaukee Bucks, 1617296400000, Fiserv Forum, Milwaukee Bucks, Milwaukee Bucks vs. Boston Celtics\n"+
-        "Milwaukee Bucks, 1617490800000, Fiserv Forum, Milwaukee Bucks, Milwaukee Bucks vs. Toronto Raptors\n"+
+        "Milwaukee Bucks, 1616994000000, Fiserv Forum, Milwaukee Bucks, Milwaukee Bucks vs. Boston Celtics\n"+
+        "Milwaukee Bucks, 1617001200000, Fiserv Forum, Milwaukee Bucks, Milwaukee Bucks vs. Toronto Raptors\n"+
         "Joe Rogan, 1617325200000, Fiserv Forum, Joe Rogan, Joe Rogan's latest comedy tour\n"+
         "The Weeknd, 1617404400000, Fiserv Forum, The Weeknd, The Weeknd's After Hours Tour\n"));
         
         List<Date> actual = backendToTest.getThreeAvailableTimes(0);
         List<Date> expected = new ArrayList<Date>();
-        expected.add(new Date(1617310800000l));
-        expected.add(new Date(1617318000000l));
-        expected.add(new Date(1617332400000l));
+        expected.add(new Date(1616997600000l));
+        expected.add(new Date(1617004800000l));
+        expected.add(new Date(1617008400000l));
         
         assertEquals(expected.toString(), actual.toString());
     }

@@ -205,10 +205,10 @@ public class BackendImplementation implements BackendInterface{
         try {
             for (int i = 0; i < 3; i++) nextThree.add(availDate.get(i));
         } catch (Exception e) {
-            return availDate;
+            return nextThree;
         }
 
-        return availDate;
+        return nextThree;
     }
 
     /* Provides the number of available times over the next week.
@@ -233,8 +233,8 @@ public class BackendImplementation implements BackendInterface{
         return avail;
     }
 
-    /* Provides a list of events scheduled at a given time. Should be only one, but
-     * provides in a list format in case events overlap.
+    /* Provides a list of events scheduled on a given date. Since the front end takes
+     * entire days, this will search all 1 hour time periods over an entire day.
      * 
      * @param date the date to search for events on
      * 
@@ -242,21 +242,27 @@ public class BackendImplementation implements BackendInterface{
      */
     @Override
     public List<Event> getEventsByDate(Date d){
-         Iterator<Event> it = events.iterator();
+        Iterator<Event> it = events.iterator();
         List<Event> matches = new ArrayList<Event>();
         try {
             //improper date throws an error
             if(d==null) throw new DataFormatException("Date was not properly initialized");
+            long milli = d.getTime();
 
             // traverses the iterator in-order traversal searching for matches
             while (it.hasNext()) {
                 Event temp = it.next();
-                // if there is a match, add it to the return list
-                if (temp.getDate().compareTo(d) == 0) matches.add(temp);
-                // if the given event has a date smaller than the one searching for, continue
-                else if (temp.getDate().compareTo(d) < 0 ) continue;
-                // if the given event is passed the date, end the search since it's in-order
-                else return matches;
+                
+                // searching over all times during the 24 hour period
+               for (int i = 0; i < 24; i++) {                    
+                   long temp2 = milli + (i*3600000);
+                   // if there is a match, add it to the return list
+                   if (temp.getDate().compareTo(new Date(temp2)) == 0) matches.add(temp);
+                   // if the given event has a date smaller than the one searching for, continue
+                   else if (temp.getDate().compareTo(new Date(temp2)) < 0 ) continue;
+                   // if the given event is passed the date, continue
+                   else continue;
+                }
             }
             
         } catch(Exception e) {
