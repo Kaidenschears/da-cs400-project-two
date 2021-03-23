@@ -10,19 +10,20 @@ import java.util.zip.DataFormatException;
 
 public class DataReaderImplementation implements EventDataReaderInterface {
 
-  @Override
+  
 
   /**
-   * Reads a FileReader into a list of movie objects @return(s) List of Event objects
+   * Reads a FileReader into a list of Event objects @return(s) List of Event objects
    * 
    * @throws IOException,DataFormatException
    */
-  public List<EventInterface> readDataSet(Reader inputReader) throws IOException, DataFormatException {
+  @Override
+  public List<Event> readDataSet(Reader inputReader) throws IOException, DataFormatException {
     if (inputReader == null) {
       throw new IOException("Reader object passed to ReadDataSet is null");
     }
 
-    List<EventInterface> events = new ArrayList<Event>();
+    List<Event> events = new ArrayList<Event>();
     String line = "";
     BufferedReader br = null;
     br = new BufferedReader(inputReader);
@@ -57,21 +58,36 @@ public class DataReaderImplementation implements EventDataReaderInterface {
         throw new DataFormatException(
             "The number of columns for this event object is not the expected size of 5.");
       }
-      name = columns.get(0);
+      name = columns.get(0).trim();
 
-      venue = columns.get(2);
+      venue = columns.get(2).trim();
 
-      groupName = columns.get(3);
+      groupName = columns.get(3).trim();
 
-      description = columns.get(4);
+      description = columns.get(4).trim();
+      SimpleDateFormat df=new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+      // int length= columns.get(1).trim().length();
+      // if(columns.get(1).trim().charAt(length-1)== 'L'){
+      //   System.out.println("chk1");
+      //   long date=Long.parseLong(columns.get(1).trim());
+      //   System.out.println("chk2");
+      //   eventDate=new Date(date);
+      //   System.out.println("chk3");
+      // }
+      // else
+       try{
+      eventDate = df.parse(columns.get(1).trim());}
+      catch(Exception e){
+        long date=Long.parseLong(columns.get(1).trim());
+        eventDate=new Date(date);
+      }
 
-      eventDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(columns.get(1)); 
-
+  
 
     } catch (Exception e) {
       throw new DataFormatException(e.getMessage());
     }
-    return new Event(name, eventDate, venue, groupName, description);// put arguments here);
+    return new Event(name, eventDate, venue, groupName, description);
     // name, Date, venue, groupName, description
   }
 

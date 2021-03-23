@@ -2,7 +2,7 @@ import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
+import java.text.ParseException;
 public class DataWranglerTests {
 
     EventDataReaderInterface tester;
@@ -25,7 +25,7 @@ public class DataWranglerTests {
  */
     public boolean testEmptyCSV(){
         tester = new DataReaderImplementation();
-        List<EventInterface> eventsList;
+        List<Event> eventsList;
 
         try{
             eventsList = tester.readDataSet(new StringReader(""));
@@ -49,7 +49,7 @@ public class DataWranglerTests {
      */
     public boolean testOneEvent(){
         tester = new DataReaderImplementation();
-        List<EventInterface> eventsList;
+        List<Event> eventsList;
 
         try{
             eventsList = tester.readDataSet(new StringReader(
@@ -74,7 +74,7 @@ public class DataWranglerTests {
      */
     public boolean testThreeEvents(){
         tester = new DataReaderImplementation();
-        List<EventInterface> eventsList;
+        List<Event> eventsList;
 
         try{
             eventsList = tester.readDataSet(new StringReader(
@@ -105,7 +105,7 @@ public class DataWranglerTests {
     public boolean testEvent(){
         try{
             Date dateCheck = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse("2021-Mar-19 14:00:00");
-            Event event = new EventObject("Science Exploration", dateCheck, "Liquid", "Bill Nye", "Make Science Fun");
+            Event event = new Event("Science Exploration", dateCheck, "Liquid", "Bill Nye", "Make Science Fun");
             if(!event.getGroupName().equals("Bill Nye")){
               System.out.println("check3");
               return false;
@@ -148,13 +148,23 @@ public class DataWranglerTests {
  * expected.
  */
     public boolean testToString(){
-        Date dateCheck = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse("2021-Mar-19 14:00:00");
+	String check="";
+	try{
+        Date  dateCheck = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse("2021-Mar-19 14:00:00");
         Event event = new Event("Science Exploration", dateCheck, "Liquid", "Bill Nye", "Make Science Fun");
-        String check = event.toString();
-        if(check.equals("Science Exploration with Bill Nye, Sun Sep 10 14:00:00 CST 24"))
+        check = event.toString();
+	}
+	catch(Exception e){
+	    System.out.println("Exception");
+	    return false;
+	}
+        if(check.equals("Science Exploration with Bill Nye, Sun Sep 10 14:00:00 UTC 24"))
             return true;
-        else
+        else{
+	    System.out.println("Not equal");
+	    System.out.println(check);
             return false;
+	}
     }
     
 }

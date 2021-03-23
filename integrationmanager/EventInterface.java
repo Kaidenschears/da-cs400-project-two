@@ -8,4 +8,5 @@ public interface EventInterface {
     public String getVenueSetting();
     public String getName();
     public String toString();
+    public int compareTo(Event arg0); 
 }

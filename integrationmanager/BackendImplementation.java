@@ -18,7 +18,7 @@ public class BackendImplementation implements BackendInterface{
 
     public BackendImplementation(Reader reader) {
         events = new RedBlackTree<Event>();
-        EventDataReaderInterface dataReader = null;
+        DataReaderImplementation dataReader = new DataReaderImplementation();
         List<Event> initEvents = null;
         try {
             initEvents = dataReader.readDataSet(reader);
@@ -37,7 +37,7 @@ public class BackendImplementation implements BackendInterface{
     }
     public BackendImplementation(String[] args) {
         events = new RedBlackTree<Event>();
-        EventDataReaderInterface dataReader = null;//new EventDataReaderInterface();
+        DataReaderImplementation dataReader = new DataReaderImplementation();
         List<Event> initEvents = null;
         try {
             initEvents = dataReader.readDataSet(new FileReader(args[0]));
@@ -53,8 +53,13 @@ public class BackendImplementation implements BackendInterface{
     }
 
     @Override
-    public void addEvent(Date date, String name, String desc, String group, String venue) {
-        events.insert(new Event(name, date, desc, group, venue));
+    public void addEvent(Date date, String name, String venue, String group, String desc) {
+        try{
+        events.insert(new Event(name, date, venue, group, desc));
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -143,17 +148,24 @@ public class BackendImplementation implements BackendInterface{
     }
 
     @Override
-    public List<Event> getEventsByDate(Date d) {
-        Iterator<Event> it = events.iterator();
+    public List<Event> getEventsByDate(Date d){
+         Iterator<Event> it = events.iterator();
         List<Event> matches = new ArrayList<Event>();
+        try{
+        if(d==null){
+            throw new DataFormatException("Date was not properly initialized");
+        }
+       
         
         while (it.hasNext()) {
             Event temp = it.next();
             if (temp.getDate().compareTo(d) == 0) matches.add(temp);
             else if (temp.getDate().compareTo(d) < 0 ) continue;
             else return matches;
+        }}
+        catch(Exception e){
+            System.out.println(e.getMessage());
         }
-        
         return matches;
     }
 

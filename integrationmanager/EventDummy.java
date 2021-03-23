@@ -42,4 +42,8 @@ public class EventDummy implements EventInterface {
     public String toString() {
         return name;
     }
+    public int compareTo(Event e){
+	System.out.println("EventDummy.java does not implement CompareTo method");
+	return 0;
+    }
 }

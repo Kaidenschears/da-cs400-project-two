@@ -1,5 +1,6 @@
 import java.util.Date;
-public class Event implements EventInterface {
+import java.util.zip.DataFormatException;
+public class Event implements EventInterface, Comparable<Event>{
 
     private String name;
     private Date date;
@@ -7,12 +8,15 @@ public class Event implements EventInterface {
     private String group;
     private String venue;
     
-    public Event(String name, Date date, String desc, String group, String venue) {
+    public Event(String name, Date date, String venue, String group, String desc) throws DataFormatException{
         this.name = name;
         this.date = date;
         this.desc = desc;
         this.group = group;
         this.venue = venue;
+        if(name==""||date==null||venue==""||group==""||desc==""){
+            throw new DataFormatException("Invailid Event attributes");
+        }
     }
 
     @Override
@@ -36,8 +40,9 @@ public class Event implements EventInterface {
     @Override
     public int compareTo(Event arg0) { return this.date.compareTo(arg0.date); }
     
+    @Override
     public String toString() {
-        // "EVENT NAME @ EE MM DD HH:MM:SS ZZZ YYYY"
-        return "" + this.name + " @ " + this.date.toString();
+    return name + " with " + group + ", " + date;
     }
+
 }
