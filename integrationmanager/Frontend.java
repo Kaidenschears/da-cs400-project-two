@@ -14,6 +14,9 @@ import java.util.Scanner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/** The frontend entry point for Team DA Red's Venue Scheduler. It requires a backend interface as part of the constructor.
+ * @author Ji Lau
+ */
 class Frontend {
     private BackendInterface backend;
     private Scanner input;
@@ -22,7 +25,10 @@ class Frontend {
         this.backend = backend;
         input = new Scanner(System.in);
     }
-    
+
+    /**
+     * Coordinates the modes of the Venue Scheduler according to user input, starting first at the Main Mode
+     */
     public void run() {
         List<EventInterface> events = backend.getThreeEvents(0);
         int eventIndex = 0;
@@ -32,7 +38,7 @@ class Frontend {
             System.out.println("====================================================");
             
             if (events.size() > 0) {
-                System.out.println("Earliest scheduled events at this venue: ");
+                System.out.println("Earliest scheduled events (" + backend.getNumberOfEvents() + " total):");
                 for (int i = 0; i < events.size(); i++) {
                     EventInterface event = events.get(i);
                     System.out.println(i+eventIndex+1 + ": " + event.getDate() + " - " +  event.getName());
@@ -53,9 +59,9 @@ class Frontend {
             String command = input.nextLine().trim().toLowerCase();
 
             if (command.matches("^\\d+$")) {
-                int index = Integer.parseInt(command)-1;
+                int index = Integer.parseInt(command);
                 if (index >= 0 && index <= backend.getNumberOfEvents()) {
-                    eventIndex = index;
+                    eventIndex = index-1;
                     events = backend.getThreeEvents(eventIndex);
                 }
             }
@@ -76,6 +82,9 @@ class Frontend {
         }
     }
 
+    /**
+     * Runs the Planning Mode, which can be used to pick new dates to create new events
+     */
     public void runPlanningMode() {
         List<Date> availableTimes = backend.getThreeAvailableTimes(0);
         int timeIndex = 0;
@@ -85,7 +94,7 @@ class Frontend {
             System.out.println("====================================================");
 
             if (availableTimes.size() > 0) {
-                System.out.println("Available Times:");
+                System.out.println("Available Times (" + backend.getNumberAvailableTimes() + " total): ");
                 for (int i = 0; i < availableTimes.size(); i++) {
                     Date event = availableTimes.get(i);
                     System.out.println(i+timeIndex+1 + ": " + event.toString());
@@ -100,9 +109,9 @@ class Frontend {
             System.out.println("Type 'x' to return to the Main Mode.");
             String command = input.nextLine().trim().toLowerCase();
             if (command.matches("^\\d+$")) {
-                int index = Integer.parseInt(command)-1;
+                int index = Integer.parseInt(command);
                 if (index >= 0 && index <= backend.getNumberAvailableTimes()) {
-                    timeIndex = index;
+                    timeIndex = index-1;
                     availableTimes = backend.getThreeAvailableTimes(timeIndex);
                 }
             }
@@ -112,6 +121,7 @@ class Frontend {
                 List<Date> times = backend.getThreeAvailableTimes(index);
                 if (times.size() > 0) {
                     promptUserForEventInfo(times.get(0));
+                    availableTimes = backend.getThreeAvailableTimes(0);
                 }
             }
             else if (command.equals("x")) {
@@ -123,6 +133,10 @@ class Frontend {
         }
     }
 
+    /**
+     * Prompts the user for event information when creating an event; is called after the user selects a date in Planning Mode
+     * @param date the date to create the event for
+     */
     public void promptUserForEventInfo(Date date) {
         System.out.println();
         System.out.println("===========PLANNING MODE: EVENT CREATION============");
@@ -163,6 +177,9 @@ class Frontend {
         }
     }
 
+    /**
+     * Run the Searching Mode of the Venue Scheduler. Users can search for events by either name or date depending on the toggle.
+     */
     public void runSearchingMode() {
         List<EventInterface> searchResults = new ArrayList<EventInterface>();
         boolean searchByDate = true;
@@ -200,9 +217,11 @@ class Frontend {
             String commandLowerCase = command.toLowerCase();
             if (commandLowerCase.equals("!d")) {
                 searchByDate = true;
+                searchResults.clear();
             }
             else if (commandLowerCase.equals("!n")) {
                 searchByDate = false;
+                searchResults.clear();
             }
             else if (commandLowerCase.matches("^!info \\d+\\s*$")) {
                 String[] parts = commandLowerCase.split(" ");
@@ -233,6 +252,10 @@ class Frontend {
         }
     }
 
+    /**
+     * An extension of Searching Mode called when a user wishes to see more about an event by typing the expansion input string described in the mode.
+     * @param event
+     */
     public void displayEventInfo(EventInterface event) {
         System.out.println();
         System.out.println("===========SEARCHING MODE: EVENT EXPANSION==========");
@@ -247,8 +270,12 @@ class Frontend {
         input.nextLine();
     }
 
+    /**
+     * Instantiate a new frontend and backend, and run the frontend
+     * @param args the arguments, if any
+     */
     public static void main(String[] args) {
-        Frontend frontend = new Frontend(new BackendDummy());
+        Frontend frontend = new Frontend(new BackendImplementation());
         frontend.run();
     }
 }
