@@ -1,7 +1,7 @@
 default: run
 
 run: compile
-	java Frontend 
+	java Frontend event_data.txt 
 
 compile: Event.class  EventObject.class EventDataReaderInterface.class DataReaderImplementation.class 
 
