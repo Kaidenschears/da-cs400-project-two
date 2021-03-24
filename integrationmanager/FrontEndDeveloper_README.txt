@@ -13,10 +13,8 @@ FrontEndDeveloperTests.java
 
 Additional Contributions:
 -------------------------
-<List any additional contributions that you have made toward your team's
- completion of this project.  This might include, but is not limited to things
- like: organizing team communication, creating extra tests or dummy classes,
- assisting team members in any way, etc.>
+Created BackendDummy.java and EventDummy.java for initial testing.
+My implementation of RedBlackTree.java is being used.
 
 Signature: Ji Lau
 ----------

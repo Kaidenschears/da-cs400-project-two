@@ -1,16 +1,20 @@
 // --== CS400 File Header Information ==--
-// Name: Bennett Schmanski
-// Email: bschmanski@wisc.edu
-// Team: DA
+// Name: Ji Lau
+// Email: jlau24@wisc.edu
+// Team: DA: Red
+// Role: Front End Developer
 // TA: Dan Kiel
 // Lecturer: Gary Dahl
-// Notes to Grader: 
+// Notes to Grader: N/A
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Stack;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Red-Black Tree implementation with a Node inner class for representing
@@ -22,18 +26,21 @@ import java.util.Stack;
  * traversal of the tree.
  */
 public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionInterface<T> {
-
     /**
      * This class represents a node holding a single value within a binary tree
      * the parent, left, and right child references are always maintained.
      */
     protected static class Node<T> {
         public T data;
-        public boolean isBlack;
         public Node<T> parent; // null for root node
         public Node<T> leftChild; 
-        public Node<T> rightChild; 
-        public Node(T data) { this.data = data; this.isBlack = false; }
+        public Node<T> rightChild;
+        public boolean isBlack;
+
+        public Node(T data) { 
+            this.data = data; 
+            this.isBlack = false;
+        }
         /**
          * @return true when this node has a parent and is the left child of
          * that parent, otherwise return false
@@ -90,15 +97,17 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
             "This RedBlackTree cannot store null references.");
 
         Node<T> newNode = new Node<>(data);
-        if(root == null) { // add first node to an empty tree
-            root = newNode; size++; this.root.isBlack = true;
+        // add first node to an empty tree
+        if (root == null) { 
+            root = newNode; size++;
+            root.isBlack = true;
             return true; 
-            } else {
+        }
+        else {
             boolean returnValue = insertHelper(newNode,root); // recursively insert into subtree
             if (returnValue) size++;
-        else throw new IllegalArgumentException(
-            "This RedBlackTree already contains that value.");
-            this.root.isBlack = true;
+            else throw new IllegalArgumentException("This RedBlackTree already contains that value.");
+            root.isBlack = true;
             return returnValue;
         }
     }
@@ -155,152 +164,116 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
      *      node references are not initially (pre-rotation) related that way
      */
     private void rotate(Node<T> child, Node<T> parent) throws IllegalArgumentException {
-        if ((parent.leftChild == null && parent.rightChild == null) ||
-            (parent.leftChild == null && !parent.rightChild.equals(child)) ||
-            (parent.rightChild == null && !parent.leftChild.equals(child))) {
-            throw new IllegalArgumentException("no child/parent relationship between nodes");
-        }
-        if ((parent.leftChild != null && parent.rightChild != null) && !parent.leftChild.equals(child) && !parent.rightChild.equals(child)) {
-            throw new IllegalArgumentException("no child/parent relationship between nodes");
+        // Validate parent-child relationship before rotating
+        if (parent.leftChild != child && parent.rightChild != child) {
+            throw new IllegalArgumentException("The nodes are not associated in a parent-child relationship.");
         }
         
-        // right rotation
+        // Set grandparent's child, or set root when there is no grandparent
+        if (parent.parent != null) {
+            if (parent.isLeftChild()) {
+                parent.parent.leftChild = child;
+            }
+            else {
+                parent.parent.rightChild = child;
+            }
+        } else {
+            this.root = child;
+        }
+
         if (child.isLeftChild()) {
-            // saving important nodes
-            Node<T> grandparent = parent.parent;
-            Node<T> newLeftChild = child.rightChild;
-            
-            // transformations
-            if (grandparent == null)
-                this.root = child;
-            else if (parent.isLeftChild())
-                grandparent.leftChild = child;
-            else
-                grandparent.rightChild = child;
-            
+            parent.leftChild = child.rightChild;
+            child.parent = parent.parent;
             child.rightChild = parent;
-            child.parent = grandparent;
-            parent.leftChild = newLeftChild;
             parent.parent = child;
-        } else { // left rotation
-            // saving important nodes
-            Node<T> grandparent = parent.parent;
-            Node<T> newRightChild = child.leftChild;
-            
-            // transformations
-            if (grandparent == null)
-                this.root = child;
-            else if (parent.isLeftChild())
-                grandparent.leftChild = child;
-            else
-                grandparent.rightChild = child;
-            
+        } else {
+            parent.rightChild = child.leftChild;
+            child.parent = parent.parent;
             child.leftChild = parent;
-            child.parent = grandparent;
-            parent.rightChild = newRightChild;
-            parent.parent = child;            
+            parent.parent = child;
         }
     }
-    
-    /**This method enforces the red/black tree properties on the newly added node.
-     * Problems arise if the parent of the newly added red node is also red, and this
-     * method works to resolve those conflicts while also maintaining the original black
-     * height of the tree.
-     *  
-     * @param newNode is the node just added to the R/B tree
+
+    /**
+     * Enforces the properties of a Red-Black Tree. This is meant to be called after a naive BST insert.
      */
     private void enforceRBTreePropertiesAfterInsert(Node<T> newNode) {
-        if (newNode.parent.isBlack || newNode.parent.equals(this.root)) return;
+        // Do nothing if root
+        if (root == newNode) {
+            return;
+        }
+
+        Node<T> parent = newNode.parent;
+        Node<T> grandparent = parent.parent;
+        // Do nothing if parent is black
+        if (parent.isBlack) {
+            return;
+        }
+        // Do nothing if parent is red and has 0 or 2 black children
+        if (!parent.isBlack) {
+            if (parent.leftChild == null && parent.rightChild == null) {
+                return;
+            }
+            else if (parent.leftChild != null && parent.rightChild != null && parent.leftChild.isBlack && parent.rightChild.isBlack) {
+                return;
+            }
+        }
+
+        if (newNode.isLeftChild()) {
+            if (parent.isLeftChild() && (grandparent.rightChild == null || grandparent.rightChild.isBlack)) {
+                handleCaseOne(parent, grandparent);
+            }
+            else if (!parent.isLeftChild() && (grandparent.leftChild == null || grandparent.leftChild.isBlack)) {
+                handleCaseTwo(newNode, parent);
+            }
+            else {
+                handleCaseThree(grandparent);
+            }
+        }
         else {
-            Node<T> parent = newNode.parent;
-            Node<T> grandparent = newNode.parent.parent;
-            
-            if (newNode.parent.isLeftChild()) { // left side of the subtree solutions
-                if (grandparent.rightChild != null) { // uncle exists
-                    Node<T> uncle = newNode.parent.parent.rightChild;
-                    if (!uncle.isBlack) { // first case is red "uncle" node
-                        parent.isBlack = true;// changes colors of parent and grandparent levels
-                        uncle.isBlack = true;
-                        grandparent.isBlack = false;
-                        
-                        if (!this.root.isBlack) { // if the root node is changed to red, reverse it
-                            this.root.isBlack = true;
-                        } else {
-                            if (grandparent.parent == null) return;
-                            else if (!grandparent.parent.isBlack) { // if there is now conflict with the grandparent and great-grandparent
-                                enforceRBTreePropertiesAfterInsert(grandparent); // recursive call up the tree
-                                return;
-                            } else {
-                                return;
-                            }
-                        }
-                    } else if (uncle.isBlack && newNode.isLeftChild()) {// black uncle node on opposite side from violating node
-                        parent.isBlack = true; // swap colors of parent and grandparent then rotate around them
-                        grandparent.isBlack = false;
-                        this.rotate(parent, grandparent);
-                        return;
-                    } else { // black uncle node on same side as violating node
-                        this.rotate(newNode, parent); // rotate around violating node and parent
-                        enforceRBTreePropertiesAfterInsert(newNode.leftChild); // recursive call on the new violating node, 
-                        return;                                                       // the old parent, new child of original node
-                    }
-                } else { // uncle doesn't exist, it must be "black"
-                    if (newNode.isLeftChild()) { // same as case 1 from notes
-                        parent.isBlack = true; // swap colors of parent and grandparent then rotate around them
-                        grandparent.isBlack = false;
-                        this.rotate(parent, grandparent);
-                        return;
-                    } else { // same as case 2 from notes
-                        this.rotate(newNode, parent); // rotate around violating node and parent
-                        enforceRBTreePropertiesAfterInsert(newNode.leftChild); // recursive call on the new violating node, 
-                        return;  
-                    }
-                }
-            } else { // right side of the subtree solutions
-                if (grandparent.leftChild != null) { // uncle exists
-                    Node<T> uncle = newNode.parent.parent.leftChild;
-                    if (!uncle.isBlack) { // first case is red "uncle" node
-                        parent.isBlack = true;// changes colors of parent and grandparent levels
-                        uncle.isBlack = true;
-                        grandparent.isBlack = false;
-                        
-                        if (!this.root.isBlack) { // if the root node is changed to red, reverse it
-                            this.root.isBlack = true;
-                        } else {
-                            if (grandparent.parent == null) return;
-                            else if (!grandparent.parent.isBlack) { // if there is now conflict with the grandparent and great-grandparent
-                                enforceRBTreePropertiesAfterInsert(grandparent); // recursive call up the tree
-                                return;
-                            } else {
-                                return;
-                            }
-                        }
-                    } else if (uncle.isBlack && !newNode.isLeftChild()) {// black uncle node on opposite side from violating node
-                        parent.isBlack = true; // swap colors of parent and grandparent then rotate around them
-                        grandparent.isBlack = false;
-                        this.rotate(parent, grandparent);
-                        return;
-                    } else { // black uncle node on same side as violating node
-                        this.rotate(newNode, parent); // rotate around violating node and parent
-                        enforceRBTreePropertiesAfterInsert(newNode.rightChild); // recursive call on the new violating node, 
-                        return;                                                       // the old parent, new child of original node
-                    }
-                } else { // uncle doesn't exist, it must be "black"
-                    if (!newNode.isLeftChild()) { // same as case 1 from notes
-                        parent.isBlack = true; // swap colors of parent and grandparent then rotate around them
-                        grandparent.isBlack = false;
-                        this.rotate(parent, grandparent);
-                        return;
-                    } else { // same as case 2 from notes
-                        this.rotate(newNode, parent); // rotate around violating node and parent
-                        enforceRBTreePropertiesAfterInsert(newNode.rightChild); // recursive call on the new violating node, 
-                        return;  
-                    }
-                }
+            if (!parent.isLeftChild() && (grandparent.leftChild == null || grandparent.leftChild.isBlack)) {
+                handleCaseOne(parent, grandparent);
+            }
+            else if (parent.isLeftChild() && (grandparent.rightChild == null || grandparent.rightChild.isBlack)) {
+                handleCaseTwo(newNode, parent);
+            }
+            else {
+                handleCaseThree(grandparent);
             }
         }
     }
-    
+
+    /**
+     * Handle the case where parent's sibling is black, and is on the opposite side from violating node by swapping the colors of the parent and grandparent and rotating these two nodes
+     * @param parent the parent node
+     * @param grandparent the parent's parent node
+     */
+    private void handleCaseOne(Node<T> parent, Node<T> grandparent) {
+        parent.isBlack = !parent.isBlack;
+        grandparent.isBlack = !grandparent.isBlack;
+        rotate(parent, grandparent);
+    }
+
+    /**
+     * Handle the case where parent's sibling is black, and is on the same side as the violating node by rotating the new node and the parent and shifting up a level in the tree
+     * @param newNode the new node to add
+     * @param parent the new node's parent node
+     */
+    private void handleCaseTwo(Node<T> newNode, Node<T> parent) {
+        rotate(newNode, parent);
+        enforceRBTreePropertiesAfterInsert(parent);
+    }
+
+    /**
+     * Handle the case where the parent's sibling is red by swapping the colors of both parents (using the grandparent as reference)
+     * @param grandparent the grandparent node
+     */
+    private void handleCaseThree(Node<T> grandparent) {
+        grandparent.leftChild.isBlack = !grandparent.leftChild.isBlack;
+        grandparent.rightChild.isBlack = !grandparent.rightChild.isBlack;
+        enforceRBTreePropertiesAfterInsert(grandparent);
+    }
+
     /**
      * Get the size of the tree (its number of nodes).
      * @return the number of nodes in the tree
@@ -439,7 +412,7 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
         StringBuffer sb = new StringBuffer();
         sb.append("[ ");
         if (treeNodeIterator.hasNext())
-            sb.append(treeNodeIterator.next().toString());
+            sb.append(treeNodeIterator.next());
         while (treeNodeIterator.hasNext()) {
             T data = treeNodeIterator.next();
             sb.append(", ");
@@ -448,5 +421,4 @@ public class RedBlackTree<T extends Comparable<T>> implements SortedCollectionIn
         sb.append(" ]");
         return sb.toString();
     }
-
 }
