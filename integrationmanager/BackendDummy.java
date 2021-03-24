@@ -4,12 +4,12 @@ import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class BackendDummy implements BackendInterface {
-    private List<EventInterface> events;
+public class BackendDummy  {
+    private List<EventDummy> events;
     private List<Date> availableTimes;
 
     public BackendDummy() {
-        events =  new ArrayList<EventInterface>();
+        events =  new ArrayList<EventDummy>();
         for (int i = 1; i  <= 5; i++) {
             events.add(new EventDummy(new Date("3/" + i + "/2021"), "Event " + i, "Event " + i + " Description", "Event " + i + " Group", "Event " + i + " Venue"));
         }
@@ -23,8 +23,8 @@ public class BackendDummy implements BackendInterface {
         events.add(new EventDummy(date, name, desc, group, venue));
     }
     
-    public List<EventInterface> getThreeEvents(int startIndex) {
-        List<EventInterface> result = new ArrayList<EventInterface>();
+    public List<EventDummy> getThreeEvents(int startIndex) {
+        List<EventDummy> result = new ArrayList<EventDummy>();
         for (int i = startIndex; i < events.size() && i < startIndex+3; i++) {
             result.add(events.get(i));
         }
@@ -51,11 +51,11 @@ public class BackendDummy implements BackendInterface {
         return availableTimes.size();
     }
     
-    public List<EventInterface> getEventsByDate(Date d) {
+    public List<EventDummy> getEventsByDate(Date d) {
         return events.stream().filter(e -> e.getDate().equals(d)).collect(Collectors.toList());
     }
 
-    public List<EventInterface> getEventsByName(String name) {
+    public List<EventDummy> getEventsByName(String name) {
         return events.stream().filter(e -> e.getName().equals(name)).collect(Collectors.toList());
     }
 }

@@ -28,6 +28,7 @@ public class BackendImplementation implements BackendInterface{
 
     // the red black tree holding all the event objects
     RedBlackTree<Event> events;
+    Event mostRecent=null;
 
     /**
      * This constructor takes no arguments and just instantiates an empty tree.
@@ -102,7 +103,10 @@ public class BackendImplementation implements BackendInterface{
     @Override
     public void addEvent(Date date, String name, String venue, String group, String desc) {
         try{
-        events.insert(new Event(name, date, venue, group, desc));
+            Event newEvent=new Event(name, date, venue, group, desc);
+            if(mostRecent!=newEvent){
+            mostRecent= newEvent;
+        events.insert(mostRecent);}
         }
         catch(Exception e){
             System.out.println(e.getMessage());

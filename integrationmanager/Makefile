@@ -3,7 +3,7 @@ default: run
 run: compile
 	java Frontend event_data.txt 
 
-compile: Event.class  EventObject.class EventDataReaderInterface.class DataReaderImplementation.class 
+compile: EventInterface.class  Event.class  EventDataReaderInterface.class DataReaderImplementation.class BackendInterface.class RedBlackTree.class BackendImplementation.class Frontend.class
 
 test: testData testBackend testFrontend
 
