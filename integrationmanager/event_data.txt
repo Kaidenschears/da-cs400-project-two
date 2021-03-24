@@ -1,0 +1,21 @@
+Name,Date,Venue,groupName,Description
+Music Fest,17-Oct-2021 14:00:00,The Arena,Drake,Cool singer
+Pop Festivel,25-Mar-2021 14:00:00,The Arena,Drake,Cool singer
+Comedy Night,24-Mar-2021 14:00:00,The Arena,Tom Segura,Comedian
+EDM Fest,28-Mar-2021 14:00:00,The Arena,Louis the Child,Sick Music
+Science Exploration,27-Mar-2021 14:00:00,The Arena,Bill Nye, Make Science Fun
+Bingo Night,29-Mar-2021 11:00:00,The Arena,Old Ladies,It's Bingo Time
+The 5 Kage Summit,26-Mar-2021 13:00:00,The Arena,The 5 Kage + other characters,A summit of the 5 kage
+Rock Show,26-Mar-2021 15:00:00,The Arena,Geologist of America,A conference for geologists
+Computer Science Conference,26-Mar-2021 08:00:00,The Arena,American Computer Science Group,Annual Conference for Computer Scientists
+Dave Ramsey in Person,26-Mar-2021 10:00:00,The Arena,Dave Ramsey,A great way to learn financial literacy
+Card Collecting,26-Mar-2021 12:00:00,The Arena,Card Collectors of America,Collectors can meet up to trade rare cards
+Experimental Aviation Conference,26-Mar-2021 14:00:00,The Arena,EAA,Aviators come from around the world to talk flight
+Global Chemistry Conference,30-Mar-2021 112:00:00,The Arena,Foundation for Global Chemistry,Bi-Annual Conference for Chemists
+Accounting Conference 2021,30-Mar-2021 08:00:00,The Arena,World Accounting Group,Annual Conference for Accountants
+Civil Engineering Summit,30-Mar-2021 10:00:00,The Arena,ASC,Annual Conference for Civil Engineers
+Dan Ponto Invitational, 01-Apr-2021 08:00:00,The Arena,AAU,Basketball Tournament
+Country Music Show,01-Apr-2021 18:00:00,The Arena,Eric Church,Eric Church Performs live
+Chemistry For Kids,02-Apr-2021 10:00:00,The Arena,Science Teachers,Introduce children to chemistry in a fun way
+Alex Jansen Invitation,03-Apr-2021 08:00:00,The Arena,USAV,Volleyball Tournament
+Our Universe,02-Apr-2021 18:00:00,Planetarium,Neil Degrasse-Tyson,A lectrue on what makes our universe so awesome
