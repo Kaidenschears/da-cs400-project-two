@@ -16,7 +16,6 @@ BackEndDeveloperTests.java
 Additional Contributions:
 -------------------------
 Created dummy event and eventdatareader classes for my testing purposes.
-Utilized my RedBlackTree.java implementation
 
 Signature:
 ----------
